@@ -41,7 +41,6 @@ fraud_keywords = [
     'Cancel'
 ]
 
-
 def to_mp3(audio_file, output_audio_file, upload_path, download_path):
     if audio_file.name.split('.')[-1].lower() == "wav":
         audio_data = AudioSegment.from_wav(os.path.join(upload_path, audio_file.name))
@@ -76,7 +75,8 @@ def to_mp3(audio_file, output_audio_file, upload_path, download_path):
         audio_data.export(os.path.join(download_path, output_audio_file), format="mp3", tags=audio_tags)
     return output_audio_file
 
-def process_audio(filename, model_type):
+def process_audio(filename):
+    model_type = 'Tiny'  # Set the model type to Tiny
     model = whisper.load_model(model_type)
     result = model.transcribe(filename)
     return result["text"]
@@ -107,12 +107,11 @@ if uploaded_file is not None:
         st.markdown("Feel free to play your uploaded audio file")
         st.audio(audio_bytes)
     with col2:
-        whisper_model_type = st.radio("Please choose your model type", ('Tiny', 'Base', 'Small', 'Medium', 'Large'))
+        whisper_model_type = 'Tiny'  # Set the model type to Tiny
 
     if st.button("Generate Transcript"):
         with st.spinner(f"Generating Transcript"):
-            transcript = process_audio(str(os.path.abspath(os.path.join(download_path, output_audio_file))),
-                                       whisper_model_type.lower())
+            transcript = process_audio(str(os.path.abspath(os.path.join(download_path, output_audio_file))))
 
             output_txt_file = str(output_audio_file.split('.')[0] + ".txt")
 
