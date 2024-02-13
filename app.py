@@ -43,7 +43,6 @@ fraud_keywords = [
 
 
 def to_mp3(audio_file, output_audio_file, upload_path, download_path):
-    ## Converting Different Audio Formats To MP3 ##
     if audio_file.name.split('.')[-1].lower() == "wav":
         audio_data = AudioSegment.from_wav(os.path.join(upload_path, audio_file.name))
         audio_data.export(os.path.join(download_path, output_audio_file), format="mp3", tags=audio_tags)
@@ -86,7 +85,7 @@ def save_transcript(transcript_data, txt_file):
     with open(os.path.join(transcript_path, txt_file), "w") as f:
         f.write(transcript_data)
 
-st.title("🗣 Automatic Speech Recognition")
+st.title("Automatic Speech Recognition")
 st.info('Supports Audio formats - WAV, MP3, MP4, OGG, WMA, AAC, FLAC, FLV')
 uploaded_file = st.file_uploader("Upload audio file", type=["wav", "mp3", "ogg", "wma", "aac", "flac", "mp4", "flv"])
 
